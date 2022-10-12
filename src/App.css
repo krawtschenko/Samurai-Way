@@ -1,6 +1,10 @@
-.app_wrapper {
+.app__wrapper {
+  width: 80%;
+  min-height: 100vh;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: 200px 200px;
+  /*grid-template-columns: repeat(3, 1fr);*/
+  /*grid-template-rows: 1fr 5fr 1fr;*/
 }
 
 .app__header {
