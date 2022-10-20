@@ -1,24 +1,11 @@
 .app__wrapper {
-  width: 80%;
-  min-height: 100vh;
-  margin: 0 auto;
-  display: grid;
-  /*grid-template-columns: repeat(3, 1fr);*/
-  /*grid-template-rows: 1fr 5fr 1fr;*/
+    width: 80%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-rows: 60px 1fr;
+    grid-template-columns: 2fr 10fr;
 }
 
-.app__header {
-  background-color: aqua;
-}
-
-.app__header img{
-  width: 50px;
-}
-
-.app__nav {
-  background-color: antiquewhite;
-}
-
-.app__content {
-  background-color: blueviolet;
+.app__wrapper-content {
+    background-color: darkolivegreen
 }
