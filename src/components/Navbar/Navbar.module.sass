@@ -1,2 +1,20 @@
 .nav
   background-color: antiquewhite
+
+  &__item
+    text-align: center
+
+    &:hover
+      background-color: red
+
+      .nav__link
+        color: white
+
+  &__link
+    display: block
+    font-size: 20px
+    color: black
+    text-decoration: none
+    &_active
+      font-size: 26px
+      color: gold
