@@ -1,15 +1,12 @@
 import React from "react";
 import {Post} from "./Post/Post";
-import {v1} from "uuid";
+import {PostsType} from "../../../index";
 
-export const Posts = () => {
-    const posts = [
-        {id: v1(), post: 'Post 1'},
-        {id: v1(), post: 'Post 2'},
-        {id: v1(), post: 'Post 3'},
-        {id: v1(), post: 'Post 4'},
-        {id: v1(), post: 'Post 5'}
-    ]
+type PostsPropsType = {
+    posts: Array<PostsType>
+}
+
+export const Posts: React.FC<PostsPropsType> = ({posts}) => {
 
     const postsElements = posts.map(post => {
         return (
