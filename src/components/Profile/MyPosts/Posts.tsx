@@ -11,26 +11,28 @@ export const Posts = () => {
         {id: v1(), post: 'Post 5'}
     ]
 
-  return (
-    <div>
-      <div>
-        ava + descriptions
-      </div>
-      <div>
-        Posts
+    const postsElements = posts.map(post => {
+        return (
+            <Post post={post.post}/>
+        )
+    })
+
+    return (
         <div>
-          <textarea></textarea>
-          <button>Add post</button>
+            <div>
+                ava + descriptions
+            </div>
+            <div>
+                Posts
+                <div>
+                    <textarea></textarea>
+                    <button>Add post</button>
+                </div>
+                <div>
+                    New post
+                </div>
+                {postsElements}
+            </div>
         </div>
-        <div>
-          New post
-        </div>
-          {posts.map(post => {
-              return (
-                  <Post post={post.post}/>
-              )
-          })}
-      </div>
-    </div>
-  )
+    )
 }
