@@ -3,7 +3,7 @@ import React from "react";
 
 export const ProfileInfo = () => {
     return (
-        <div>
+        <div className={style.profileInfo}>
             <img
                 src="https://funart.pro/uploads/posts/2021-04/1618238917_52-p-savanni-i-redkolesya-zhivotnie-zhivotnie-k-57.jpg"
                 alt="background"/>

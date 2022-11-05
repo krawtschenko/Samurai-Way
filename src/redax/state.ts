@@ -1,8 +1,10 @@
 import {v1} from "uuid";
+import {renderTree} from "../render";
 
 export type PostsType = {
     id: string
     post: string
+    likesCount: string
 }
 
 export type DialogsType = {
@@ -32,11 +34,11 @@ export type StateType = {
 export const state: StateType = {
     profilePage: {
         posts:  [
-            {id: v1(), post: 'Post 1'},
-            {id: v1(), post: 'Post 2'},
-            {id: v1(), post: 'Post 3'},
-            {id: v1(), post: 'Post 4'},
-            {id: v1(), post: 'Post 5'}
+            {id: v1(), post: 'Post 1', likesCount: 'Likes 2'},
+            {id: v1(), post: 'Post 2', likesCount: 'Likes 3'},
+            {id: v1(), post: 'Post 3', likesCount: 'Likes 2'},
+            {id: v1(), post: 'Post 4', likesCount: 'Likes 1'},
+            {id: v1(), post: 'Post 5', likesCount: 'Likes 4'}
         ]
     },
     dialogsPage: {
@@ -54,4 +56,10 @@ export const state: StateType = {
             {id: v1(), message: 'Du hast mich'}
         ]
     }
+}
+
+export const addPost = (postMessage: string) => {
+    const newPost: PostsType = {id: v1(), post: postMessage, likesCount: 'Likes 0'}
+    state.profilePage.posts.unshift(newPost)
+    renderTree(state)
 }

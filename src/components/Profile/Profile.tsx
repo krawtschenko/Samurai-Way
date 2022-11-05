@@ -6,13 +6,14 @@ import {PostsType} from "../../redax/state";
 
 type ProfilePropsType = {
     posts: PostsType[]
+    addPost: (postMessage: string) => void
 }
 
-export const Profile: React.FC<ProfilePropsType> = ({posts}) => {
+export const Profile: React.FC<ProfilePropsType> = ({posts, addPost}) => {
   return (
     <div className={style.profile}>
       <ProfileInfo/>
-      <Posts posts={posts}/>
+      <Posts posts={posts} addPost={addPost}/>
     </div>
   )
 }
