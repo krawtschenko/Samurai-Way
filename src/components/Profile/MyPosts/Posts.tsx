@@ -1,13 +1,15 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import {Post} from "./Post/Post";
 import {PostsType} from "../../../redax/state";
 
 type PostsPropsType = {
     posts: Array<PostsType>
-    addPost: (postMessage: string) => void
+    newPostText: string
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
 }
 
-export const Posts: React.FC<PostsPropsType> = ({posts, addPost}) => {
+export const Posts: React.FC<PostsPropsType> = ({posts, newPostText, addPost, updateNewPostText}) => {
 
     const postsElements = posts.map(post => {
         return (
@@ -15,17 +17,18 @@ export const Posts: React.FC<PostsPropsType> = ({posts, addPost}) => {
         )
     })
 
-    let newPostElement = React.createRef<HTMLTextAreaElement>() // Створюємо посилання та привʼязуємо до textarea
+    // let newPostElement = React.createRef<HTMLTextAreaElement>() // Створюємо посилання та привʼязуємо до textarea
 
     const addPostHandler = () => {
-        const text = newPostElement.current?.value //Якшо current існує, то іде далі (value). Якшо ні, то undefined
-        if (text) {
-            addPost(text)
-            // if (newPostElement.current) {
-            //     newPostElement.current.value = ''
-            // }
-            newPostElement.current && (newPostElement.current.value = '') // Якшо newPostElement.current існує, то присваюємо value пустий рядок
-        }
+            addPost()
+    }
+
+    const onChangeInputHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        // const text = newPostElement.current?.value
+        // if (text) {
+        //     updateNewPostText(text)
+        // }
+        updateNewPostText(event.currentTarget.value)
     }
 
     return (
@@ -33,7 +36,8 @@ export const Posts: React.FC<PostsPropsType> = ({posts, addPost}) => {
             <h3>My posts</h3>
             <div>
                 <div>
-                    <textarea ref={newPostElement}></textarea> {/*Привʼязали посилання*/}
+                    {/*<textarea ref={newPostElement} value={newPostText} onChange={onChangeInputHandler}/> /!*Привʼязали посилання ref*!/*/}
+                    <textarea value={newPostText} onChange={(event) => {onChangeInputHandler(event)}}/> {/*Привʼязали посилання ref*/}
                     <button onClick={addPostHandler}>Add post
                     </button>
                 </div>

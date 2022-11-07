@@ -19,6 +19,7 @@ export type MessagesType = {
 
 export type ProfilePageType = {
     posts: PostsType[]
+    newPostText: string
 }
 
 export type DialogsPageType = {
@@ -39,7 +40,8 @@ export const state: StateType = {
             {id: v1(), post: 'Post 3', likesCount: 'Likes 2'},
             {id: v1(), post: 'Post 4', likesCount: 'Likes 1'},
             {id: v1(), post: 'Post 5', likesCount: 'Likes 4'}
-        ]
+        ],
+        newPostText: ''
     },
     dialogsPage: {
         dialogs: [
@@ -58,8 +60,14 @@ export const state: StateType = {
     }
 }
 
-export const addPost = (postMessage: string) => {
-    const newPost: PostsType = {id: v1(), post: postMessage, likesCount: 'Likes 0'}
+export const addPost = () => {
+    const newPost: PostsType = {id: v1(), post: state.profilePage.newPostText, likesCount: 'Likes 0'}
     state.profilePage.posts.unshift(newPost)
+    state.profilePage.newPostText = ''
+    renderTree(state)
+}
+
+export const updateNewPostText = (newText: string) => {
+    state.profilePage.newPostText = newText
     renderTree(state)
 }
