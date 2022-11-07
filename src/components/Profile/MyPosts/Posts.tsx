@@ -37,7 +37,7 @@ export const Posts: React.FC<PostsPropsType> = ({posts, newPostText, addPost, up
             <div>
                 <div>
                     {/*<textarea ref={newPostElement} value={newPostText} onChange={onChangeInputHandler}/> /!*Привʼязали посилання ref*!/*/}
-                    <textarea value={newPostText} onChange={(event) => {onChangeInputHandler(event)}}/> {/*Привʼязали посилання ref*/}
+                    <textarea value={newPostText} onChange={(event) => {onChangeInputHandler(event)}}/>
                     <button onClick={addPostHandler}>Add post
                     </button>
                 </div>
