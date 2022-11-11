@@ -1,5 +1,14 @@
 import {v1} from "uuid";
-import {renderTree} from "../render";
+
+let onChange = () => {
+    console.log('State is ready')
+}
+
+//Функція subscribe, яка отримує в параметр функцію (renderTree)
+export const subscribe = (callback: () => void) => {
+    //Перезаписуємо функцію onChange і тепер вона буде виконувати те саме що і renderTree
+    onChange = callback
+}
 
 export type PostsType = {
     id: string
@@ -64,10 +73,10 @@ export const addPost = () => {
     const newPost: PostsType = {id: v1(), post: state.profilePage.newPostText, likesCount: 'Likes 0'}
     state.profilePage.posts.unshift(newPost)
     state.profilePage.newPostText = ''
-    renderTree(state)
+    onChange()
 }
 
 export const updateNewPostText = (newText: string) => {
     state.profilePage.newPostText = newText
-    renderTree(state)
+    onChange()
 }
