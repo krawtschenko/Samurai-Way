@@ -10,24 +10,14 @@ type PostsPropsType = {
 }
 
 export const Posts: React.FC<PostsPropsType> = ({posts, newPostText, addPost, updateNewPostText}) => {
-
+    // Відрисовуємо всі пости
     const postsElements = posts.map(post => {
         return (
             <Post key={post.id} post={post.post} likesCount={post.likesCount}/>
         )
     })
 
-    // let newPostElement = React.createRef<HTMLTextAreaElement>() // Створюємо посилання та привʼязуємо до textarea
-
-    const addPostHandler = () => {
-            addPost()
-    }
-
     const onChangeInputHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        // const text = newPostElement.current?.value
-        // if (text) {
-        //     updateNewPostText(text)
-        // }
         updateNewPostText(event.currentTarget.value)
     }
 
@@ -36,15 +26,15 @@ export const Posts: React.FC<PostsPropsType> = ({posts, newPostText, addPost, up
             <h3>My posts</h3>
             <div>
                 <div>
-                    {/*<textarea ref={newPostElement} value={newPostText} onChange={onChangeInputHandler}/> /!*Привʼязали посилання ref*!/*/}
-                    <textarea value={newPostText} onChange={(event) => {onChangeInputHandler(event)}}/>
-                    <button onClick={addPostHandler}>Add post
-                    </button>
+                    <textarea value={newPostText}
+                              onChange={(event) => {
+                                  onChangeInputHandler(event)
+                              }}/>
+                    <button onClick={addPost}>Add post</button>
                 </div>
                 <div>
-                    New post
+                    {postsElements}
                 </div>
-                {postsElements}
             </div>
         </div>
     )

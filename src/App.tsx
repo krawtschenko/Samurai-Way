@@ -14,6 +14,8 @@ type AppPropsType = {
     state: StateType
     addPost: () => void
     updateNewPostText: (newText: string) => void
+    sendMessage: () => void
+    updateNewMessageText: (newText: string) => void
 }
 
 function App(props: AppPropsType) {
@@ -23,10 +25,17 @@ function App(props: AppPropsType) {
                     <Header/>
                     <Navbar/>
                     <div className={"app__wrapper-content"}>
-                        <Route path="/profile" render={() => <Profile profilePage={props.state.profilePage} addPost={props.addPost} updateNewPostText={props.updateNewPostText}/>}/>
+                        <Route path="/profile" render={() => <Profile profilePage={props.state.profilePage}
+                                                                      addPost={props.addPost}
+                                                                      updateNewPostText={props.updateNewPostText}/>}
+                        />
                         <Route path="/dialogs"
                                render={() => <Dialogs dialogs={props.state.dialogsPage.dialogs}
-                                                      messages={props.state.dialogsPage.messages}/>}/>
+                                                      messages={props.state.dialogsPage.messages}
+                                                      newMessageText={props.state.dialogsPage.newMessageText}
+                                                      sendMessage={props.sendMessage}
+                                                      updateNewMessageText={props.updateNewMessageText}/>}
+                        />
                         <Route path="/news" render={() => <News/>}/>
                         <Route path="/music" render={() => <Music/>}/>
                         <Route path="/settings" render={() => <Settings/>}/>
