@@ -8,11 +8,11 @@ import {Dialogs} from "./components/Dialogs/Dialogs";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {AllActionType, StateType} from "./redax/state";
+import {ActionsType, StateType} from "./redax/state";
 
 type AppPropsType = {
     state: StateType
-    dispatch: (action: AllActionType) => void
+    dispatch: (action: ActionsType) => void
 }
 
 function App(props: AppPropsType) {

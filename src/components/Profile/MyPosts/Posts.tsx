@@ -1,11 +1,11 @@
 import React, {ChangeEvent} from "react";
 import {Post} from "./Post/Post";
-import {AllActionType, PostsType} from "../../../redax/state";
+import {ActionsType, addPostAC, PostsType, updateNewPostTextAC} from "../../../redax/state";
 
 type PostsPropsType = {
     posts: Array<PostsType>
     newPostText: string
-    dispatch: (action: AllActionType) => void
+    dispatch: (action: ActionsType) => void
 }
 
 export const Posts: React.FC<PostsPropsType> = ({posts, newPostText, dispatch}) => {
@@ -17,11 +17,11 @@ export const Posts: React.FC<PostsPropsType> = ({posts, newPostText, dispatch}) 
     })
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch({type: "UPDATE-NEW-POST-TEXT", newText: event.currentTarget.value})
+        dispatch(updateNewPostTextAC(event.currentTarget.value))
     }
 
     const onClickButtonHandler = () => {
-        dispatch({type: "ADD-POST"})
+        dispatch(addPostAC())
     }
 
     return (

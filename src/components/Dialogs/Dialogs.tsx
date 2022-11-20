@@ -2,13 +2,13 @@ import style from './Dialogs.module.sass'
 import React, {ChangeEvent} from "react";
 import {DialogsItem} from "./DialogsItem/DialogsItem";
 import {MessagesItem} from "./MessagesItem/MessagesItem";
-import {AllActionType, DialogsType, MessagesType} from "../../redax/state";
+import {ActionsType, DialogsType, MessagesType, sendMessageAC, updateNewMessageTextAC} from "../../redax/state";
 
 type DialogsPropsType = {
     dialogs: DialogsType[]
     messages: MessagesType[]
     newMessageText: string
-    dispatch: (action: AllActionType) => void
+    dispatch: (action: ActionsType) => void
 
 }
 
@@ -35,11 +35,11 @@ export const Dialogs: React.FC<DialogsPropsType> = ({
     const onChangeInputHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
         // Викликаємо метод Dispatch з параметрами. Параметри визначають,
         // яку ф-ію треба викликати далі
-        dispatch({type: "UPDATE-NEW-MESSAGE-TEXT", newText: event.currentTarget.value})
+        dispatch(updateNewMessageTextAC(event.currentTarget.value))
     }
 
     const onClickButtonHandler = () => {
-        dispatch({type: "SEND-MESSAGE"})
+        dispatch(sendMessageAC())
     }
 
     return (

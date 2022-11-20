@@ -1,5 +1,6 @@
 import {v1} from "uuid";
 
+// Типізація
 export type PostsType = {
     id: string
     post: string
@@ -31,29 +32,41 @@ export type StoreType = {
     getState: () => StateType
     _onChange: () => void
     subscribe: (callback: () => void) => void
-    dispatch: (action: AllActionType) => void
+    dispatch: (action: ActionsType) => void
 }
 // Типізація для actions
-export type AllActionType =
-    AddPostActionType
-    | UpdateNewPostTextActionType
-    | SendMessageActionType
-    | UpdateNewMessageTextActionType
-type AddPostActionType = {
-    type: 'ADD-POST'
+// Встановлює тип, який повертає обрана ф-ія
+export type ActionsType =
+    ReturnType<typeof updateNewPostTextAC>
+    | ReturnType<typeof addPostAC>
+    | ReturnType<typeof updateNewMessageTextAC>
+    | ReturnType<typeof sendMessageAC>
+
+// Ф-ії які повертають тип для action creator
+export const updateNewPostTextAC = (newText: string) => {
+    return {
+        type: "UPDATE-NEW-POST-TEXT",
+        newText: newText
+    } as const
 }
-type UpdateNewPostTextActionType = {
-    type: 'UPDATE-NEW-POST-TEXT'
-    newText: string
+export const addPostAC = () => {
+    return {
+        type: "ADD-POST"
+    } as const
 }
-type SendMessageActionType = {
-    type: 'SEND-MESSAGE'
+export const updateNewMessageTextAC = (newText: string) => {
+    return {
+        type: "UPDATE-NEW-MESSAGE-TEXT",
+        newText: newText
+    } as const
 }
-type UpdateNewMessageTextActionType = {
-    type: 'UPDATE-NEW-MESSAGE-TEXT'
-    newText: string
+export const sendMessageAC = () => {
+    return {
+        type: "SEND-MESSAGE"
+    } as const
 }
 
+// Обʼєкт, в якому знаходяться всі дані
 export const store: StoreType = {
     _state: {
         profilePage: {
@@ -68,12 +81,12 @@ export const store: StoreType = {
         },
         dialogsPage: {
             dialogs: [
-                {id: v1(), name: "Cho'Gall"},
-                {id: v1(), name: "Varian"},
-                {id: v1(), name: "Rexxar"},
+                {id: v1(), name: "Neo"},
+                {id: v1(), name: "Thor"},
+                {id: v1(), name: "Hulk"},
                 {id: v1(), name: "Thrall"},
-                {id: v1(), name: "Garrosh"},
-                {id: v1(), name: "Jaina"},
+                {id: v1(), name: "Iron Man"},
+                {id: v1(), name: "Capitan America"},
             ],
             messages: [
                 {id: v1(), message: 'Du'},
