@@ -1,15 +1,14 @@
 import React, {ChangeEvent} from "react";
 import {Post} from "./Post/Post";
-import {PostsType} from "../../../redax/state";
+import {AllActionType, PostsType} from "../../../redax/state";
 
 type PostsPropsType = {
     posts: Array<PostsType>
     newPostText: string
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: AllActionType) => void
 }
 
-export const Posts: React.FC<PostsPropsType> = ({posts, newPostText, addPost, updateNewPostText}) => {
+export const Posts: React.FC<PostsPropsType> = ({posts, newPostText, dispatch}) => {
     // Відрисовуємо всі пости
     const postsElements = posts.map(post => {
         return (
@@ -18,7 +17,11 @@ export const Posts: React.FC<PostsPropsType> = ({posts, newPostText, addPost, up
     })
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewPostText(event.currentTarget.value)
+        dispatch({type: "UPDATE-NEW-POST-TEXT", newText: event.currentTarget.value})
+    }
+
+    const onClickButtonHandler = () => {
+        dispatch({type: "ADD-POST"})
     }
 
     return (
@@ -30,7 +33,7 @@ export const Posts: React.FC<PostsPropsType> = ({posts, newPostText, addPost, up
                               onChange={(event) => {
                                   onChangeInputHandler(event)
                               }}/>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={onClickButtonHandler}>Add post</button>
                 </div>
                 <div>
                     {postsElements}

@@ -2,29 +2,30 @@ import style from './Dialogs.module.sass'
 import React, {ChangeEvent} from "react";
 import {DialogsItem} from "./DialogsItem/DialogsItem";
 import {MessagesItem} from "./MessagesItem/MessagesItem";
-import {DialogsType, MessagesType} from "../../redax/state";
+import {AllActionType, DialogsType, MessagesType} from "../../redax/state";
 
 type DialogsPropsType = {
     dialogs: DialogsType[]
     messages: MessagesType[]
     newMessageText: string
-    sendMessage: () => void
-    updateNewMessageText: (newText: string) => void
+    dispatch: (action: AllActionType) => void
+
 }
 
 export const Dialogs: React.FC<DialogsPropsType> = ({
                                                         dialogs,
                                                         messages,
                                                         newMessageText,
-                                                        sendMessage,
-                                                        updateNewMessageText
+                                                        dispatch
                                                     }) => {
+    // Відрисовуємо всі діалоги
     const dialogsElements = dialogs.map(person => {
         return (
             <DialogsItem key={person.id} id={person.id} name={person.name}/>
         )
     })
 
+    // Відрисовуємо всі повідомлення
     const messagesElements = messages.map(message => {
         return (
             <MessagesItem key={message.id} id={message.id} message={message.message}/>
@@ -32,7 +33,13 @@ export const Dialogs: React.FC<DialogsPropsType> = ({
     })
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewMessageText(event.currentTarget.value)
+        // Викликаємо метод Dispatch з параметрами. Параметри визначають,
+        // яку ф-ію треба викликати далі
+        dispatch({type: "UPDATE-NEW-MESSAGE-TEXT", newText: event.currentTarget.value})
+    }
+
+    const onClickButtonHandler = () => {
+        dispatch({type: "SEND-MESSAGE"})
     }
 
     return (
@@ -43,7 +50,7 @@ export const Dialogs: React.FC<DialogsPropsType> = ({
             <div className={style.messages}>
                 {messagesElements}
                 <textarea value={newMessageText} onChange={(event) => onChangeInputHandler(event)}/>
-                <button onClick={sendMessage}>Send a message</button>
+                <button onClick={onClickButtonHandler}>Send a message</button>
             </div>
         </div>
     )

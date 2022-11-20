@@ -2,22 +2,20 @@ import React from "react";
 import style from "./Profile.module.sass"
 import {Posts} from "./MyPosts/Posts";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {ProfilePageType} from "../../redax/state";
+import {AllActionType, ProfilePageType} from "../../redax/state";
 
 type ProfilePropsType = {
     profilePage: ProfilePageType
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: AllActionType) => void
 }
 
-export const Profile: React.FC<ProfilePropsType> = ({profilePage, addPost, updateNewPostText}) => {
+export const Profile: React.FC<ProfilePropsType> = ({profilePage, dispatch}) => {
   return (
     <div className={style.profile}>
       <ProfileInfo/>
       <Posts posts={profilePage.posts}
-             addPost={addPost}
              newPostText={profilePage.newPostText}
-             updateNewPostText={updateNewPostText}
+             dispatch={dispatch}
       />
     </div>
   )

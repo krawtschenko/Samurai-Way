@@ -29,18 +29,35 @@ export type StateType = {
 export type StoreType = {
     _state: StateType
     getState: () => StateType
-    onChange: () => void
+    _onChange: () => void
     subscribe: (callback: () => void) => void
-    updateNewPostText: (newText: string) => void
-    addPost: () => void
-    updateNewMessageText: (newText: string) => void
-    sendMessage: () => void
+    dispatch: (action: AllActionType) => void
+}
+// Типізація для actions
+export type AllActionType =
+    AddPostActionType
+    | UpdateNewPostTextActionType
+    | SendMessageActionType
+    | UpdateNewMessageTextActionType
+type AddPostActionType = {
+    type: 'ADD-POST'
+}
+type UpdateNewPostTextActionType = {
+    type: 'UPDATE-NEW-POST-TEXT'
+    newText: string
+}
+type SendMessageActionType = {
+    type: 'SEND-MESSAGE'
+}
+type UpdateNewMessageTextActionType = {
+    type: 'UPDATE-NEW-MESSAGE-TEXT'
+    newText: string
 }
 
 export const store: StoreType = {
     _state: {
         profilePage: {
-            posts:  [
+            posts: [
                 {id: v1(), post: 'Post 1', likesCount: 'Likes 2'},
                 {id: v1(), post: 'Post 2', likesCount: 'Likes 3'},
                 {id: v1(), post: 'Post 3', likesCount: 'Likes 2'},
@@ -70,32 +87,31 @@ export const store: StoreType = {
         return this._state
     },
     // Оновлення сторінки
-    onChange() {
+    _onChange() {
         console.log('State is ready')
     },
-    //Функція subscribe, яка отримує в параметр функцію (renderTree)
+    //Функція subscribe, яка отримує в параметр функцію (renderTree) із index
     subscribe(callback: () => void) {
-    //Перезаписуємо функцію onChange і тепер вона буде виконувати те саме що і renderTree
-    this.onChange = callback
-},
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this.onChange()
+        //Перезаписуємо функцію onChange і тепер вона буде виконувати те саме що і renderTree
+        this._onChange = callback
     },
-    addPost() {
-        const newPost: PostsType = {id: v1(), post: this._state.profilePage.newPostText, likesCount: 'Likes 0'}
-        this._state.profilePage.posts.unshift(newPost)
-        this._state.profilePage.newPostText = ''
-        this.onChange()
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            const newPost: PostsType = {id: v1(), post: this._state.profilePage.newPostText, likesCount: 'Likes 0'}
+            this._state.profilePage.posts.unshift(newPost)
+            this._state.profilePage.newPostText = ''
+            this._onChange()
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText
+            this._onChange()
+        } else if (action.type === 'SEND-MESSAGE') {
+            const newMessage: MessagesType = {id: v1(), message: this._state.dialogsPage.newMessageText}
+            this._state.dialogsPage.messages.push(newMessage)
+            this._state.dialogsPage.newMessageText = ''
+            this._onChange()
+        } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
+            this._state.dialogsPage.newMessageText = action.newText
+            this._onChange()
+        }
     },
-    updateNewMessageText(newText: string) {
-        this._state.dialogsPage.newMessageText = newText
-        this.onChange()
-    },
-    sendMessage() {
-        const newMessage: MessagesType = {id: v1(), message: this._state.dialogsPage.newMessageText}
-        this._state.dialogsPage.messages.push(newMessage)
-        this._state.dialogsPage.newMessageText = ''
-        this.onChange()
-    }
 }
