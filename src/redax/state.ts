@@ -35,7 +35,7 @@ export type StoreType = {
     dispatch: (action: ActionsType) => void
 }
 // Типізація для actions
-// Встановлює тип, який повертає обрана ф-ія
+// ReturnType встановлює тип, який повертає обрана ф-ія
 export type ActionsType =
     ReturnType<typeof updateNewPostTextAC>
     | ReturnType<typeof addPostAC>
