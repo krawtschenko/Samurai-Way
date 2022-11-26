@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {ActionsType, PostsType, ProfilePageType} from "./store";
+import {ActionsType, PostsType, ProfilePageType} from "./reduxStore";
 
 const initialState = {
     posts: [

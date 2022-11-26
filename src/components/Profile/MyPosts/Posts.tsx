@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from "react";
 import {Post} from "./Post/Post";
-import {ActionsType, PostsType} from "../../../redax/store";
+import {ActionsType, PostsType} from "../../../redax/reduxStore";
 import {addPostAC, updateNewPostTextAC} from "../../../redax/profileReducer";
 
 type PostsPropsType = {

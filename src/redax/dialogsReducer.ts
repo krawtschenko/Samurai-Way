@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {ActionsType, DialogsPageType, MessagesType} from "./store";
+import {ActionsType, DialogsPageType, MessagesType} from "./reduxStore";
 
 const initialState = {
     dialogs: [

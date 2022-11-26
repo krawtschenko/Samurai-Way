@@ -2,46 +2,46 @@ import {addPostAC, updateNewPostTextAC} from "./profileReducer";
 import {sendMessageAC, updateNewMessageTextAC} from "./dialogsReducer";
 
 // Типізація
-export type PostsType = {
-    id: string
-    post: string
-    likesCount: string
-}
-export type DialogsType = {
-    id: string
-    name: string
-}
-export type MessagesType = {
-    id: string
-    message: string
-}
-export type ProfilePageType = {
-    posts: PostsType[]
-    newPostText: string
-}
-export type DialogsPageType = {
-    dialogs: DialogsType[]
-    messages: MessagesType[]
-    newMessageText: string
-}
-export type StateType = {
-    profilePage: ProfilePageType
-    dialogsPage: DialogsPageType
-}
-export type StoreType = {
-    _state: StateType
-    getState: () => StateType
-    _onChange: () => void
-    subscribe: (callback: () => void) => void
-    dispatch: (action: ActionsType) => void
-}
-// Типізація для actions
-// ReturnType встановлює тип, який повертає обрана ф-ія
-export type ActionsType =
-    ReturnType<typeof updateNewPostTextAC>
-    | ReturnType<typeof addPostAC>
-    | ReturnType<typeof updateNewMessageTextAC>
-    | ReturnType<typeof sendMessageAC>
+// export type PostsType = {
+//     id: string
+//     post: string
+//     likesCount: string
+// }
+// export type DialogsType = {
+//     id: string
+//     name: string
+// }
+// export type MessagesType = {
+//     id: string
+//     message: string
+// }
+// export type ProfilePageType = {
+//     posts: PostsType[]
+//     newPostText: string
+// }
+// export type DialogsPageType = {
+//     dialogs: DialogsType[]
+//     messages: MessagesType[]
+//     newMessageText: string
+// }
+// export type StateType = {
+//     profilePage: ProfilePageType
+//     dialogsPage: DialogsPageType
+// }
+// export type StoreType = {
+//     _state: StateType
+//     getState: () => StateType
+//     _onChange: () => void
+//     subscribe: (callback: () => void) => void
+//     dispatch: (action: ActionsType) => void
+// }
+// // Типізація для actions
+// // ReturnType встановлює тип, який повертає обрана ф-ія
+// export type ActionsType =
+//     ReturnType<typeof updateNewPostTextAC>
+//     | ReturnType<typeof addPostAC>
+//     | ReturnType<typeof updateNewMessageTextAC>
+//     | ReturnType<typeof sendMessageAC>
 
 // Обʼєкт, в якому знаходяться всі дані
 // export const store: StoreType = {
