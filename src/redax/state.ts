@@ -1,4 +1,6 @@
 import {v1} from "uuid";
+import profileReducer, {addPostAC, updateNewPostTextAC} from "./profileReducer";
+import dialogsReducer, {sendMessageAC, updateNewMessageTextAC} from "./dialogsReducer";
 
 // Типізація
 export type PostsType = {
@@ -41,30 +43,6 @@ export type ActionsType =
     | ReturnType<typeof addPostAC>
     | ReturnType<typeof updateNewMessageTextAC>
     | ReturnType<typeof sendMessageAC>
-
-// Ф-ії які повертають тип для action creator
-export const updateNewPostTextAC = (newText: string) => {
-    return {
-        type: "UPDATE-NEW-POST-TEXT",
-        newText: newText
-    } as const
-}
-export const addPostAC = () => {
-    return {
-        type: "ADD-POST"
-    } as const
-}
-export const updateNewMessageTextAC = (newText: string) => {
-    return {
-        type: "UPDATE-NEW-MESSAGE-TEXT",
-        newText: newText
-    } as const
-}
-export const sendMessageAC = () => {
-    return {
-        type: "SEND-MESSAGE"
-    } as const
-}
 
 // Обʼєкт, в якому знаходяться всі дані
 export const store: StoreType = {
@@ -109,22 +87,10 @@ export const store: StoreType = {
         this._onChange = callback
     },
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
-            const newPost: PostsType = {id: v1(), post: this._state.profilePage.newPostText, likesCount: 'Likes 0'}
-            this._state.profilePage.posts.unshift(newPost)
-            this._state.profilePage.newPostText = ''
-            this._onChange()
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-            this._state.profilePage.newPostText = action.newText
-            this._onChange()
-        } else if (action.type === 'SEND-MESSAGE') {
-            const newMessage: MessagesType = {id: v1(), message: this._state.dialogsPage.newMessageText}
-            this._state.dialogsPage.messages.push(newMessage)
-            this._state.dialogsPage.newMessageText = ''
-            this._onChange()
-        } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
-            this._state.dialogsPage.newMessageText = action.newText
-            this._onChange()
-        }
+        // Перезаписуємо profilePage на те що виводиться в Reducer
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+
+        this._onChange()
     },
 }
