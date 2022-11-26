@@ -2,7 +2,7 @@ import React from "react";
 import style from "./Profile.module.sass"
 import {Posts} from "./MyPosts/Posts";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {ActionsType, ProfilePageType} from "../../redax/state";
+import {ActionsType, ProfilePageType} from "../../redax/store";
 
 type ProfilePropsType = {
     profilePage: ProfilePageType
