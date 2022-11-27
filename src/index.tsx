@@ -8,11 +8,10 @@ import React from "react";
 const renderTree = () => {
     ReactDOM.render(
         <BrowserRouter>
-            <App state={store.getState()}
-                // Метод bind() створює нову функцію, яка при виклику встановлює,
-                // як контекст виконання this, надане значення (store)
-                 dispatch={store.dispatch.bind(store)}
-            />
+            <App store={store}/>
+            {/*Метод bind() створює нову функцію, яка при виклику встановлює,*/}
+            {/*як контекст виконання this, надане значення (store)*/}
+            {/*dispatch={store.dispatch.bind(store)}*/}
         </BrowserRouter>,
         document.getElementById('root')
     );

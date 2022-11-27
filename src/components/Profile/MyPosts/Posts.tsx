@@ -1,15 +1,15 @@
 import React, {ChangeEvent} from "react";
 import {Post} from "./Post/Post";
-import {ActionsType, PostsType} from "../../../redax/reduxStore";
-import {addPostAC, updateNewPostTextAC} from "../../../redax/profileReducer";
+import {PostsType} from "../../../redax/reduxStore";
 
 type PostsPropsType = {
     posts: Array<PostsType>
     newPostText: string
-    dispatch: (action: ActionsType) => void
+    onPostChange: (text: string) => void
+    addPost: () => void
 }
 
-export const Posts: React.FC<PostsPropsType> = ({posts, newPostText, dispatch}) => {
+export const Posts: React.FC<PostsPropsType> = ({posts, newPostText, onPostChange, addPost}) => {
     // Відрисовуємо всі пости
     const postsElements = posts.map(post => {
         return (
@@ -18,11 +18,11 @@ export const Posts: React.FC<PostsPropsType> = ({posts, newPostText, dispatch}) 
     })
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch(updateNewPostTextAC(event.currentTarget.value))
+        onPostChange(event.currentTarget.value)
     }
 
     const onClickButtonHandler = () => {
-        dispatch(addPostAC())
+        addPost()
     }
 
     return (

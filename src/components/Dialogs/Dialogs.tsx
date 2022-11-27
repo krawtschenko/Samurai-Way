@@ -2,23 +2,24 @@ import style from './Dialogs.module.sass'
 import React, {ChangeEvent} from "react";
 import {DialogsItem} from "./DialogsItem/DialogsItem";
 import {MessagesItem} from "./MessagesItem/MessagesItem";
-import {ActionsType, DialogsType, MessagesType} from "../../redax/reduxStore";
-import {sendMessageAC, updateNewMessageTextAC} from "../../redax/dialogsReducer";
+import {DialogsType, MessagesType} from "../../redax/reduxStore";
 
 type DialogsPropsType = {
     dialogs: DialogsType[]
     messages: MessagesType[]
     newMessageText: string
-    dispatch: (action: ActionsType) => void
-
+    onMessageChange: (text: string) => void
+    sendMessage: () => void
 }
 
-export const Dialogs: React.FC<DialogsPropsType> = ({
-                                                        dialogs,
-                                                        messages,
-                                                        newMessageText,
-                                                        dispatch
-                                                    }) => {
+export const Dialogs: React.FC<DialogsPropsType> = (
+    {
+        dialogs,
+        messages,
+        newMessageText,
+        onMessageChange,
+        sendMessage
+    }) => {
     // Відрисовуємо всі діалоги
     const dialogsElements = dialogs.map(person => {
         return (
@@ -34,13 +35,11 @@ export const Dialogs: React.FC<DialogsPropsType> = ({
     })
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        // Викликаємо метод Dispatch з параметрами. Параметри визначають,
-        // яку ф-ію треба викликати далі
-        dispatch(updateNewMessageTextAC(event.currentTarget.value))
+        onMessageChange(event.currentTarget.value)
     }
 
     const onClickButtonHandler = () => {
-        dispatch(sendMessageAC())
+        sendMessage()
     }
 
     return (

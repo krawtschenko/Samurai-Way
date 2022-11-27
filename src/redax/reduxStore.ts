@@ -29,6 +29,13 @@ export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
 }
+export type StoreType = {
+    // _state: StateType
+    getState: () => StateType
+    // _onChange: () => void
+    subscribe: (callback: () => void) => void
+    dispatch: (action: ActionsType) => void
+}
 // Типізація для actions
 // ReturnType встановлює тип, який повертає обрана ф-ія
 export type ActionsType =

@@ -8,11 +8,11 @@ import {Dialogs} from "./components/Dialogs/Dialogs";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {ActionsType, StateType} from "./redax/reduxStore";
+import {ActionsType, StoreType} from "./redax/reduxStore";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 type AppPropsType = {
-    state: StateType
-    dispatch: (action: ActionsType) => void
+    store: StoreType
 }
 
 function App(props: AppPropsType) {
@@ -22,14 +22,10 @@ function App(props: AppPropsType) {
                 <Header/>
                 <Navbar/>
                 <div className={"app__wrapper-content"}>
-                    <Route path="/profile" render={() => <Profile profilePage={props.state.profilePage}
-                                                                  dispatch={props.dispatch}/>}
+                    <Route path="/profile" render={() => <Profile store={props.store}/>}
                     />
                     <Route path="/dialogs"
-                           render={() => <Dialogs dialogs={props.state.dialogsPage.dialogs}
-                                                  messages={props.state.dialogsPage.messages}
-                                                  newMessageText={props.state.dialogsPage.newMessageText}
-                                                  dispatch={props.dispatch}/>}
+                           render={() => <DialogsContainer store={props.store}/>}
                     />
                     <Route path="/news" render={() => <News/>}/>
                     <Route path="/music" render={() => <Music/>}/>
