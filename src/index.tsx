@@ -4,14 +4,15 @@ import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
 import App from "./App";
 import React from "react";
+import StoreContext from './StoreContext';
 
 const renderTree = () => {
     ReactDOM.render(
         <BrowserRouter>
-            <App store={store}/>
-            {/*Метод bind() створює нову функцію, яка при виклику встановлює,*/}
-            {/*як контекст виконання this, надане значення (store)*/}
-            {/*dispatch={store.dispatch.bind(store)}*/}
+            {/*За допомогою StoreContext, всі дочирні елементи App можуть брати store без пропсів*/}
+            <StoreContext.Provider value={store}>
+                <App/>
+            </StoreContext.Provider>
         </BrowserRouter>,
         document.getElementById('root')
     );
