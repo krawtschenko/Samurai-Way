@@ -1,38 +1,42 @@
-import React from 'react';
 import {Dialogs} from "./Dialogs";
 import {sendMessageAC, updateNewMessageTextAC} from "../../redax/dialogsReducer";
-import StoreContext from '../../StoreContext';
+import {connect} from "react-redux";
+import {AppStateType, DialogsType, MessagesType} from "../../redax/reduxStore";
+import {Dispatch} from "redux";
 
-// Презентаційний компонент (для того, щоб в компонент Posts не передавати дані, а передавати тільки callback
-type DialogsContainerPropsType = {
-    // store: StoreType
+// Презентаційний компонент (для того, щоб в компонент Dialog не передавати всі дані
+
+type MapStatePropsType = {
+    dialogs: DialogsType[]
+    messages: MessagesType[]
+    newMessageText: string
+}
+type MapDispatchPropsType = {
+    onMessageChange: (text: string) => void
+    sendMessage: () => void
 }
 
-const DialogsContainer: React.FC<DialogsContainerPropsType> = () => {
+// Приймає весь state, а повертає state з даними для Dialogs, який передаємо компоненті Dialogs
+function mapStateToProps(state: AppStateType): MapStatePropsType {
+    return {
+        dialogs: state.dialogsPage.dialogs,
+        messages: state.dialogsPage.messages,
+        newMessageText: state.dialogsPage.newMessageText
+    }
+}
 
-    return (
-        <StoreContext.Consumer>
-            {(store) => {
-                const onMessageChange = (text: string) => {
-                    // Викликаємо метод Dispatch з параметрами. Параметри визначають,
-                    // яку ф-ію треба викликати далі
-                    store.dispatch(updateNewMessageTextAC(text))
-                }
+// Повертає функції які викликають dispatch і далі передаємо і Dialogs
+function mapDispatchToProps(dispatch: Dispatch): MapDispatchPropsType {
+    return {
+        onMessageChange: (text: string) => {
+            dispatch(updateNewMessageTextAC(text))
+        },
+        sendMessage: () => {
+            dispatch(sendMessageAC())
+        }
+    }
+}
 
-                const sendMessage = () => {
-                    store.dispatch(sendMessageAC())
-                }
-
-                return (
-                    <Dialogs dialogs={store.getState().dialogsPage.dialogs}
-                             messages={store.getState().dialogsPage.messages}
-                             newMessageText={store.getState().dialogsPage.newMessageText}
-                             onMessageChange={onMessageChange}
-                             sendMessage={sendMessage}/>
-                )
-            }}
-        </StoreContext.Consumer>
-    );
-};
-
-export default DialogsContainer;
+// Викликаємо фунцкію connect і потім викликаємо функцію яку визвала connect
+// В параметри передаємо те, шо повинно прийти в Dialogs в пропси
+export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)

@@ -4,15 +4,15 @@ import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
 import App from "./App";
 import React from "react";
-import StoreContext from './StoreContext';
+import {Provider} from "react-redux";
 
 const renderTree = () => {
     ReactDOM.render(
         <BrowserRouter>
-            {/*За допомогою StoreContext, всі дочирні елементи App можуть брати store без пропсів*/}
-            <StoreContext.Provider value={store}>
+            {/*За допомогою Provider, всі дочирні елементи App можуть брати store без пропсів*/}
+            <Provider store={store}>
                 <App/>
-            </StoreContext.Provider>
+            </Provider>
         </BrowserRouter>,
         document.getElementById('root')
     );

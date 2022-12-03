@@ -12,7 +12,7 @@ const initialState = {
     newPostText: ''
 }
 
-const ProfileReducer = (state: ProfilePageType = initialState, action: ActionsType) => {
+const ProfileReducer = (state: ProfilePageType = initialState, action: ActionsType): ProfilePageType => {
     switch (action.type) {
         case 'ADD-POST': {
             const newPost: PostsType = {id: v1(), post: state.newPostText, likesCount: 'Likes 0'}

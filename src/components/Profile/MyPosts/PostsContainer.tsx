@@ -1,33 +1,36 @@
-import React from 'react';
 import {Posts} from "./Posts";
 import {addPostAC, updateNewPostTextAC} from "../../../redax/profileReducer";
-import StoreContext from '../../../StoreContext';
+import {connect} from "react-redux";
+import {AppStateType, PostsType} from "../../../redax/reduxStore";
+import {Dispatch} from "redux";
 
 // Презентаційний компонент (для того, щоб в компонент Posts не передавати дані, а передавати тільки callback)
-type PostsContainerPropsType = {
+type MapStatePropsType = {
+    posts: PostsType[]
+    newPostText: string
 }
 
-const PostsContainer: React.FC<PostsContainerPropsType> = () => {
+type MapDispatchPropsType = {
+    onPostChange: (text: string) => void
+    addPost: () => void
+}
 
-    return (
-        <StoreContext.Consumer>
-            {(store) => {
-                const onPostChange = (text: string) => {
-                    store.dispatch(updateNewPostTextAC(text))
-                }
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+    return {
+        posts: state.profilePage.posts,
+        newPostText: state.profilePage.newPostText
+    }
+}
 
-                const addPost = () => {
-                    store.dispatch(addPostAC())
-                }
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+    return {
+        onPostChange: (text: string) => {
+            dispatch(updateNewPostTextAC(text))
+        },
+        addPost: () => {
+            dispatch(addPostAC())
+        }
+    }
+}
 
-                return (
-                    <Posts posts={store.getState().profilePage.posts}
-                           newPostText={store.getState().profilePage.newPostText}
-                           onPostChange={onPostChange}
-                           addPost={addPost}/>)
-            }}
-        </StoreContext.Consumer>
-    );
-};
-
-export default PostsContainer;
+export const PostsContainer = connect(mapStateToProps, mapDispatchToProps)(Posts)
