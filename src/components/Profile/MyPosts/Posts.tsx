@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from "react";
 import {Post} from "./Post/Post";
-import {PostsType} from "../../../redax/reduxStore";
+import {PostsType} from "../../../redax/profileReducer";
 
 type PostsPropsType = {
     posts: Array<PostsType>

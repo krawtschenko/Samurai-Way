@@ -1,7 +1,7 @@
 import {Posts} from "./Posts";
-import {addPostAC, updateNewPostTextAC} from "../../../redax/profileReducer";
+import {addPostAC, PostsType, updateNewPostTextAC} from "../../../redax/profileReducer";
 import {connect} from "react-redux";
-import {AppStateType, PostsType} from "../../../redax/reduxStore";
+import {AppStateType} from "../../../redax/reduxStore";
 import {Dispatch} from "redux";
 
 // Презентаційний компонент (для того, щоб в компонент Posts не передавати дані, а передавати тільки callback)

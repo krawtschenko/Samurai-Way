@@ -1,7 +1,7 @@
 import {Dialogs} from "./Dialogs";
-import {sendMessageAC, updateNewMessageTextAC} from "../../redax/dialogsReducer";
+import {DialogsType, MessagesType, sendMessageAC, updateNewMessageTextAC} from "../../redax/dialogsReducer";
 import {connect} from "react-redux";
-import {AppStateType, DialogsType, MessagesType} from "../../redax/reduxStore";
+import {AppStateType} from "../../redax/reduxStore";
 import {Dispatch} from "redux";
 
 // Презентаційний компонент (для того, щоб в компонент Dialog не передавати всі дані
