@@ -1,11 +1,12 @@
 import style from './ProfileInfo.module.sass'
 import React from "react";
+import background from "./savana.jpg"
 
 export const ProfileInfo = () => {
     return (
         <div className={style.profileInfo}>
             <img
-                src="https://funart.pro/uploads/posts/2021-04/1618238917_52-p-savanni-i-redkolesya-zhivotnie-zhivotnie-k-57.jpg"
+                src={background}
                 alt="background"/>
         </div>
     )

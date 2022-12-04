@@ -1,11 +1,12 @@
 import React from "react";
 import style from "./Header.module.sass"
+import icon from "./logoHeader.png"
 
-export const Header = () => {
+export const Header= () => {
   return (
     <header className={style.header}>
       <img
-        src="https://cdn-icons-png.flaticon.com/512/235/235361.png"
+        src={icon}
         alt="logo"/>
     </header>
   )

@@ -6,7 +6,7 @@ import App from "./App";
 import React from "react";
 import {Provider} from "react-redux";
 
-const renderTree = () => {
+// const renderTree = () => {
     ReactDOM.render(
         <BrowserRouter>
             {/*За допомогою Provider, всі дочирні елементи App можуть брати store без пропсів*/}
@@ -16,9 +16,9 @@ const renderTree = () => {
         </BrowserRouter>,
         document.getElementById('root')
     );
-}
+// }
 
-//Викликаємо renderTree
-renderTree()
-//Викликаємо subscribe і передаємо в параметри функцію renderTree
-store.subscribe(renderTree)
+// //Викликаємо renderTree
+// renderTree()
+// //Викликаємо subscribe і передаємо в параметри функцію renderTree
+// store.subscribe(renderTree)

@@ -25,16 +25,7 @@ export type DialogsPageType = {
     messages: MessagesType[]
     newMessageText: string
 }
-// export type StateType = {
-//     profilePage: ProfilePageType
-//     dialogsPage: DialogsPageType
-// }
 // Типізація для Redux
-// export type StoreType = {
-//     getState: () => StateType
-//     subscribe: (callback: () => void) => void
-//     dispatch: (action: ActionsType) => void
-// }
 export type AppStateType = ReturnType<typeof reducers>
 // Типізація для actions
 // ReturnType встановлює тип, який повертає обрана ф-ія
