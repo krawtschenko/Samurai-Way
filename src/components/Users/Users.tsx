@@ -1,6 +1,7 @@
 import React from "react";
 import {UsersType} from "../../redax/usersReducer";
 import {v1} from "uuid";
+import style from './Users.module.sass'
 
 type UsersPropsType = {
     users: UsersType[]
@@ -51,29 +52,30 @@ export const Users: React.FC<UsersPropsType> = ({users, follow, unFollow, setUse
         <div>
             {users.map(user => {
                 return (
-                    <div key={user.id}>
-                        <span>
+                    <div key={user.id} className={style.users__wrapper}>
+                        <div className={style.users__photoAndBtn}>
                             <div>
                                 <img src={user.photo} alt="icon"/>
                             </div>
                             <div>
                                 {user.followed
-                                    ? <button onClick={() => unFollow(user.id)}>Unfollow</button>
-                                    : <button onClick={() => follow(user.id)}>Follow</button>}
+                                    ? <button className={style.users__btn_unfollow}
+                                              onClick={() => unFollow(user.id)}>Unfollow</button>
+                                    : <button className={style.users__btn_follow}
+                                              onClick={() => follow(user.id)}>Follow</button>}
                             </div>
-                        </span>
-                        <span>
-                            <span>
+                        </div>
+
+                        <div className={style.users__info}>
+                            <div className={style.users__nameAndTitle}>
                                 <div>{user.fullName}</div>
                                 <div>{user.status}</div>
-                            </span>
-                        </span>
-                        <span>
-                            <span>
+                            </div>
+                            <div className={style.users__location}>
                                 <div>{user.location.country}</div>
                                 <div>{user.location.city}</div>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </div>
                 )
             })}
