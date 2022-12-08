@@ -1,5 +1,5 @@
 import React from "react";
-import style from "../Dialogs.module.sass";
+import style from "./DialogsItem.module.sass";
 import {NavLink} from "react-router-dom";
 
 type DialogsItemPropsType = {
@@ -9,8 +9,9 @@ type DialogsItemPropsType = {
 
 export const DialogsItem: React.FC<DialogsItemPropsType> = (props) => {
     return (
-        <div className={style.dialog__item}>
-            <NavLink to={'/dialogs/' + props.id}>{props.name}</NavLink>
+        <div className={style.dialogs}>
+            <NavLink to={'/dialogs/' + props.id}
+                     className={style.dialog__item} activeClassName={style.active}>{props.name}</NavLink>
         </div>
     )
 }
