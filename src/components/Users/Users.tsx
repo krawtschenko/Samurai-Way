@@ -2,7 +2,7 @@ import React from "react";
 import {UsersType} from "../../redax/usersReducer";
 import style from './Users.module.sass'
 import axios from "axios";
-import userIcon from './userIcon.png'
+import userIcon from '../../Images/userIcon.png'
 
 type UsersPropsType = {
     users: UsersType[]
