@@ -1,8 +1,11 @@
 export type UsersType = {
     id: string
-    photo: string
+    photos: {
+        "small": null | string
+        "large": null | string
+    }
     followed: boolean
-    fullName: string
+    name: string
     status: string
     location: {
         city: string
