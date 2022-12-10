@@ -12,6 +12,7 @@ type UsersPropsType = {
 }
 
 export class UsersC extends React.Component<UsersPropsType> {
+    // componentDidMount() викликається відразу після монтування компонента
     componentDidMount() {
         axios.get("https://social-network.samuraijs.com/api/1.0/users")
             .then(response => {
