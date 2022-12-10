@@ -1,8 +1,8 @@
 import {connect} from "react-redux";
-import {Users} from "./Users";
 import {AppStateType} from "../../redax/reduxStore";
 import {followAC, setUsersAC, unFollowAC, UsersType,} from "../../redax/usersReducer";
 import {Dispatch} from "redux";
+import {UsersC} from "./UsersC";
 
 type MapStatePropsType = {
     users: UsersType[]
@@ -33,4 +33,4 @@ function mapDispatchToProps(dispatch: Dispatch): MapDispatchPropsType {
     }
 }
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users)
+export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersC)
