@@ -1,15 +1,5 @@
-import {connect} from "react-redux";
-import {AppStateType} from "../../redax/reduxStore";
-import {
-    followAC,
-    setCurrentPageAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    unFollowAC,
-    UsersType,
-} from "../../redax/usersReducer";
-import {Dispatch} from "redux";
 import React from "react";
+import {UsersType} from "../../redax/usersReducer";
 import axios from "axios";
 import {Users} from "./Users";
 
@@ -25,7 +15,7 @@ type UsersPropsType = {
     setTotalUsersCount: (totalUsersCount: number) => void
 }
 
-class UsersComponent extends React.Component<UsersPropsType> {
+export class UsersApiComponent extends React.Component<UsersPropsType> {
     // componentDidMount() викликається відразу після монтування компонента
     componentDidMount() {
         // Відправляємо запрос на сервер
@@ -48,6 +38,8 @@ class UsersComponent extends React.Component<UsersPropsType> {
     }
 
     render() {
+
+
         return (
             <Users users={this.props.users}
                    follow={this.props.follow}
@@ -61,48 +53,3 @@ class UsersComponent extends React.Component<UsersPropsType> {
         )
     }
 }
-
-type MapStatePropsType = {
-    users: UsersType[]
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-}
-type MapDispatchPropsType = {
-    follow: (userID: string) => void
-    unFollow: (userID: string) => void
-    setUsers: (users: any) => void
-    setCurrentPage: (currentPage: number) => void
-    setTotalUsersCount: (totalUsersCount: number) => void
-}
-
-function mapStateToProps(state: AppStateType): MapStatePropsType {
-    return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage
-    }
-}
-
-function mapDispatchToProps(dispatch: Dispatch): MapDispatchPropsType {
-    return {
-        follow: (userID: string) => {
-            dispatch(followAC(userID))
-        },
-        unFollow: (userID: string) => {
-            dispatch(unFollowAC(userID))
-        },
-        setUsers: (users: UsersType[]) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (currentPage: number) => {
-            dispatch(setCurrentPageAC(currentPage))
-        },
-        setTotalUsersCount: (totalUsersCount: number) => {
-            dispatch(setTotalUsersCountAC(totalUsersCount))
-        }
-    }
-}
-
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersComponent)

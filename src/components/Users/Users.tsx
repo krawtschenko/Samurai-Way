@@ -1,7 +1,6 @@
 import React from "react";
 import {UsersType} from "../../redax/usersReducer";
 import style from './Users.module.sass'
-import axios from "axios";
 import userIcon from '../../Images/userIcon.png'
 
 type UsersPropsType = {
@@ -9,22 +8,32 @@ type UsersPropsType = {
     follow: (userID: string) => void
     unFollow: (userID: string) => void
     setUsers: (users: any) => void
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    onPageChanged: (currentPage: number) => void
 }
 
-export const Users: React.FC<UsersPropsType> = ({users, follow, unFollow, setUsers}) => {
-    const getUsers = () => {
-        if (users.length === 0) {
-            axios.get("https://social-network.samuraijs.com/api/1.0/users")
-                .then(response => {
-                    setUsers(response.data.items)
-                })
-        }
+export const Users: React.FC<UsersPropsType> = (props) => {
+    // Вичісляємо кількість сторінок
+    const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+    const pages = []
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
     }
 
     return (
         <div>
-            <button onClick={getUsers}>Get users</button>
-            {users.map(user => {
+            <div>
+                {pages.map(elem => {
+                    const classForSpan = `${style.users__countPages} ${elem === props.currentPage && style.users__selected}`
+
+                    return (
+                        <span onClick={() => props.onPageChanged(elem)}
+                              className={classForSpan}>{elem}</span>)
+                })}
+            </div>
+            {props.users.map(user => {
                 return (
                     <div key={user.id} className={style.users__wrapper}>
                         <div className={style.users__photoAndBtn}>
@@ -34,9 +43,9 @@ export const Users: React.FC<UsersPropsType> = ({users, follow, unFollow, setUse
                             <div>
                                 {user.followed
                                     ? <button className={style.users__btn_unfollow}
-                                              onClick={() => unFollow(user.id)}>Unfollow</button>
+                                              onClick={() => props.unFollow(user.id)}>Unfollow</button>
                                     : <button className={style.users__btn_follow}
-                                              onClick={() => follow(user.id)}>Follow</button>}
+                                              onClick={() => props.follow(user.id)}>Follow</button>}
                             </div>
                         </div>
 
