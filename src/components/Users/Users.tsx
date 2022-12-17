@@ -25,11 +25,11 @@ export const Users: React.FC<UsersPropsType> = (props) => {
     return (
         <div>
             <div>
-                {pages.map(elem => {
+                {pages.map((elem, index) => {
                     const classForSpan = `${style.users__countPages} ${elem === props.currentPage && style.users__selected}`
 
                     return (
-                        <span onClick={() => props.onPageChanged(elem)}
+                        <span key={index} onClick={() => props.onPageChanged(elem)}
                               className={classForSpan}>{elem}</span>)
                 })}
             </div>
