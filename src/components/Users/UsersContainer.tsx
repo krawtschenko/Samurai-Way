@@ -1,14 +1,9 @@
 import {connect} from "react-redux";
 import {AppStateType} from "../../redax/reduxStore";
 import {
-    followAC,
-    setCurrentPageAC,
-    setTotalUsersCountAC,
-    setUsersAC, toggleIsLoadingAC,
-    unFollowAC,
+    follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsLoading, unFollow,
     UsersType,
 } from "../../redax/usersReducer";
-import {Dispatch} from "redux";
 import React from "react";
 import axios from "axios";
 import {Users} from "./Users";
@@ -80,14 +75,6 @@ type MapStatePropsType = {
     currentPage: number
     isLoading: boolean
 }
-type MapDispatchPropsType = {
-    follow: (userID: string) => void
-    unFollow: (userID: string) => void
-    setUsers: (users: any) => void
-    setCurrentPage: (currentPage: number) => void
-    setTotalUsersCount: (totalUsersCount: number) => void
-    toggleIsLoading: (isLoading: boolean) => void
-}
 
 function mapStateToProps(state: AppStateType): MapStatePropsType {
     return {
@@ -99,27 +86,11 @@ function mapStateToProps(state: AppStateType): MapStatePropsType {
     }
 }
 
-function mapDispatchToProps(dispatch: Dispatch): MapDispatchPropsType {
-    return {
-        follow: (userID: string) => {
-            dispatch(followAC(userID))
-        },
-        unFollow: (userID: string) => {
-            dispatch(unFollowAC(userID))
-        },
-        setUsers: (users: UsersType[]) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (currentPage: number) => {
-            dispatch(setCurrentPageAC(currentPage))
-        },
-        setTotalUsersCount: (totalUsersCount: number) => {
-            dispatch(setTotalUsersCountAC(totalUsersCount))
-        },
-        toggleIsLoading: (isLoading: boolean) => {
-            dispatch(toggleIsLoadingAC(isLoading))
-        }
-    }
-}
-
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersComponent)
+export const UsersContainer = connect(mapStateToProps, {
+    follow,
+    unFollow,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    toggleIsLoading
+})(UsersComponent)
