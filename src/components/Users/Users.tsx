@@ -2,6 +2,7 @@ import React from "react";
 import {UsersType} from "../../redax/usersReducer";
 import style from './Users.module.sass'
 import userIcon from '../../Images/userIcon.png'
+import {NavLink} from "react-router-dom";
 
 type UsersPropsType = {
     users: UsersType[]
@@ -38,7 +39,9 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                     <div key={user.id} className={style.users__wrapper}>
                         <div className={style.users__photoAndBtn}>
                             <div>
-                                <img src={user.photos.small !== null ? user.photos.small : userIcon} alt="icon"/>
+                                <NavLink to={`/Profile/${user.id}`}>
+                                    <img src={user.photos.small !== null ? user.photos.small : userIcon} alt="icon"/>
+                                </NavLink>
                             </div>
                             <div>
                                 {user.followed
