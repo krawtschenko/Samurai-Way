@@ -1,23 +1,24 @@
-import React from "react";
+import React, {FC} from "react";
 import {Profile} from "./Profile";
 import axios from "axios";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redax/reduxStore";
 import {ProfileType, setUserProfile} from "../../redax/profileReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
+import {compose} from "redux";
 
 type PathParamsType = {
     userId: string
 }
 
-type CommonPropsType = RouteComponentProps<PathParamsType> & ProfileComponentType
+type CommonPropsType = RouteComponentProps<PathParamsType> & ProfileContainerType
 
-type ProfileComponentType = {
+type ProfileContainerType = {
     setUserProfile: (profile: null | ProfileType) => void
     profile: ProfileType | null
 }
 
-class ProfileComponent extends React.Component<CommonPropsType> {
+class ProfileContainer extends React.Component<CommonPropsType> {
     componentDidMount() {
         let userId = +this.props.match.params.userId
         if (!userId) {
@@ -46,7 +47,4 @@ function mapStateToProps(state: AppStateType): MapStatePropsType {
     }
 }
 
-const WithUrlDataContainerComponent = withRouter(ProfileComponent)
-
-export const ProfileContainer = connect(mapStateToProps, {setUserProfile})(WithUrlDataContainerComponent)
-
+export default compose<FC>(connect(mapStateToProps, {setUserProfile}), withRouter)(ProfileContainer)

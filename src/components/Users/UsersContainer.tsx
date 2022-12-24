@@ -4,12 +4,13 @@ import {
     follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsLoading, unFollow,
     UsersType,
 } from "../../redax/usersReducer";
-import React from "react";
+import React, {FC} from "react";
 import axios from "axios";
 import {Users} from "./Users";
 import Preloader from "../optional/Preloader";
+import {compose} from "redux";
 
-type UsersPropsType = {
+type UsersContainerPropsType = {
     users: UsersType[]
     pageSize: number
     totalUsersCount: number
@@ -23,7 +24,7 @@ type UsersPropsType = {
     toggleIsLoading: (isLoading: boolean) => void
 }
 
-class UsersComponent extends React.Component<UsersPropsType> {
+class UsersContainer extends React.Component<UsersContainerPropsType> {
     // componentDidMount() викликається відразу після монтування компонента
     componentDidMount() {
         this.props.toggleIsLoading(true)
@@ -86,11 +87,11 @@ function mapStateToProps(state: AppStateType): MapStatePropsType {
     }
 }
 
-export const UsersContainer = connect(mapStateToProps, {
+export default compose<FC>(connect(mapStateToProps, {
     follow,
     unFollow,
     setUsers,
     setCurrentPage,
     setTotalUsersCount,
     toggleIsLoading
-})(UsersComponent)
+}))(UsersContainer)

@@ -1,9 +1,10 @@
-import React from "react";
+import React, {FC} from "react";
 import {Header} from "./Header";
 import axios from "axios";
-import {connect} from "react-redux";
 import {AppStateType} from "../../redax/reduxStore";
 import {AuthType, setAuthUserDataAC} from "../../redax/authReducer";
+import {connect} from "react-redux";
+import {compose} from "redux";
 
 type HeaderContainerPropsType = {
     login: string | null
@@ -11,7 +12,7 @@ type HeaderContainerPropsType = {
     setAuthUserDataAC: (data: AuthType) => void
 }
 
-class HeaderComponent extends React.Component<HeaderContainerPropsType> {
+class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     // componentDidMount() викликається відразу після монтування компонента
     componentDidMount() {
         // Відправляємо запрос на сервер
@@ -46,7 +47,4 @@ function mapStateToProps(state: AppStateType): MapStatePropsType {
     }
 }
 
-export const HeaderContainer = connect(mapStateToProps, {
-    setAuthUserDataAC
-})(HeaderComponent)
-
+export default compose<FC>(connect(mapStateToProps, {setAuthUserDataAC}))(HeaderContainer)
