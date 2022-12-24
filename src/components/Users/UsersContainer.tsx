@@ -5,10 +5,10 @@ import {
     UsersType,
 } from "../../redax/usersReducer";
 import React, {FC} from "react";
-import axios from "axios";
 import {Users} from "./Users";
 import Preloader from "../optional/Preloader";
 import {compose} from "redux";
+import {usersAPI} from "../../api/api";
 
 type UsersContainerPropsType = {
     users: UsersType[]
@@ -30,30 +30,28 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
         // Вмикаємо анімацію завантаження
         this.props.toggleIsLoading(true)
         // Відправляємо запрос на сервер
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-            // withCredentials: true - ми залаговані
-            {withCredentials: true})
-            // Після того як на запрос прийшла відповідь response, міняємо деякі дані
-            .then(response => {
-                // Вимикаємо анімацію завантаження
-                this.props.toggleIsLoading(false)
-                // Записуємо юзерів, які прийшли в респонді, в наш стейт
-                this.props.setUsers(response.data.items)
-                // Записуємо скільки всього юзерів
-                this.props.setTotalUsersCount(response.data.totalCount)
-            })
+        // І після того як на запрос прийде відповідь, проводимо операції з response
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
+            // Вимикаємо анімацію завантаження
+            this.props.toggleIsLoading(false)
+            // Записуємо юзерів, які прийшли в респонді, в наш стейт
+            this.props.setUsers(data.items)
+            // Записуємо скільки всього юзерів
+            this.props.setTotalUsersCount(data.totalCount)
+        })
     }
 
+    // onPageChanged - це метод в класі UsersContainer, який оновлює сторінку юзерів
     onPageChanged = (currentPage: number) => {
-        // При клікі міняємо в сторі нинішню сторінку
+        // При клікі міняємо в Сторі нинішню сторінку
         this.props.setCurrentPage(currentPage)
+        // Вмикаємо анімацію завантаження
         this.props.toggleIsLoading(true)
         // І робимо новий запрос, щоб оновити дані
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`,
-            {withCredentials: true})
-            .then(response => {
+        usersAPI.getUsers(currentPage, this.props.pageSize)
+            .then(data => {
                 this.props.toggleIsLoading(false)
-                this.props.setUsers(response.data.items)
+                this.props.setUsers(data.items)
             })
     }
 

@@ -10,9 +10,7 @@ import {compose} from "redux";
 type PathParamsType = {
     userId: string
 }
-
 type CommonPropsType = RouteComponentProps<PathParamsType> & ProfileContainerType
-
 type ProfileContainerType = {
     setUserProfile: (profile: null | ProfileType) => void
     profile: ProfileType | null
