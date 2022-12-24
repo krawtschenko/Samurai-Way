@@ -7,7 +7,6 @@ import {
 import React from "react";
 import axios from "axios";
 import {Users} from "./Users";
-import spinner from "./../../Images/Spinner.svg"
 import Preloader from "../optional/Preloader";
 
 type UsersPropsType = {

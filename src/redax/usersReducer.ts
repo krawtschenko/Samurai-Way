@@ -28,7 +28,7 @@ const usersPage: UsersPageType = {
     isLoading: false
 }
 
-export const UsersReducer = (state: UsersPageType = usersPage, action: ActionsType): UsersPageType => {
+export const usersReducer = (state: UsersPageType = usersPage, action: ActionsType): UsersPageType => {
     switch (action.type) {
         case "FOLLOW":
             return {

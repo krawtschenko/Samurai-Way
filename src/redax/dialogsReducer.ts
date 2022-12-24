@@ -31,7 +31,7 @@ const dialogsPage = {
     newMessageText: ''
 }
 
-const DialogsReducer = (state: DialogsPageType = dialogsPage, action: ActionsType): DialogsPageType => {
+const dialogsReducer = (state: DialogsPageType = dialogsPage, action: ActionsType): DialogsPageType => {
     switch (action.type) {
         case 'SEND-MESSAGE': {
             const newMessage: MessagesType = {id: v1(), message: state.newMessageText}
@@ -45,7 +45,7 @@ const DialogsReducer = (state: DialogsPageType = dialogsPage, action: ActionsTyp
     }
 };
 
-export type ActionsType = | ReturnType<typeof updateNewMessageTextAC> | ReturnType<typeof sendMessageAC>
+type ActionsType = | ReturnType<typeof updateNewMessageTextAC> | ReturnType<typeof sendMessageAC>
 
 export const updateNewMessageTextAC = (newText: string) => {
     return {
@@ -59,4 +59,4 @@ export const sendMessageAC = () => {
     } as const
 }
 
-export default DialogsReducer;
+export default dialogsReducer;

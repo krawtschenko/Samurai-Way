@@ -45,7 +45,7 @@ const profilePage: ProfilePageType = {
     profile: null
 }
 
-const ProfileReducer = (state: ProfilePageType = profilePage, action: ActionsType): ProfilePageType => {
+const profileReducer = (state: ProfilePageType = profilePage, action: ActionsType): ProfilePageType => {
     switch (action.type) {
         case 'ADD-POST': {
             const newPost: PostsType = {id: v1(), post: state.newPostText, likesCount: 'Likes 0'}
@@ -85,4 +85,4 @@ export const setUserProfile = (profile: ProfileType | null) => {
     } as const
 }
 
-export default ProfileReducer;
+export default profileReducer;
