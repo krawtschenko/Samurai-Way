@@ -39,6 +39,7 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                     <div key={user.id} className={style.users__wrapper}>
                         <div className={style.users__photoAndBtn}>
                             <div>
+                                {/*При клікі на фото переходимо в Profile з обраним юзером*/}
                                 <NavLink to={`/profile/${user.id}`}>
                                     <img src={user.photos.small !== null ? user.photos.small : userIcon} alt="icon"/>
                                 </NavLink>
