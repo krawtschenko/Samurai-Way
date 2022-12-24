@@ -27,13 +27,19 @@ type UsersContainerPropsType = {
 class UsersContainer extends React.Component<UsersContainerPropsType> {
     // componentDidMount() викликається відразу після монтування компонента
     componentDidMount() {
+        // Вмикаємо анімацію завантаження
         this.props.toggleIsLoading(true)
         // Відправляємо запрос на сервер
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
+            // withCredentials: true - ми залаговані
+            {withCredentials: true})
             // Після того як на запрос прийшла відповідь response, міняємо деякі дані
             .then(response => {
+                // Вимикаємо анімацію завантаження
                 this.props.toggleIsLoading(false)
+                // Записуємо юзерів, які прийшли в респонді, в наш стейт
                 this.props.setUsers(response.data.items)
+                // Записуємо скільки всього юзерів
                 this.props.setTotalUsersCount(response.data.totalCount)
             })
     }
@@ -43,7 +49,8 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
         this.props.setCurrentPage(currentPage)
         this.props.toggleIsLoading(true)
         // І робимо новий запрос, щоб оновити дані
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`,
+            {withCredentials: true})
             .then(response => {
                 this.props.toggleIsLoading(false)
                 this.props.setUsers(response.data.items)
