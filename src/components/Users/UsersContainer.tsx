@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import {AppStateType} from "../../redax/reduxStore";
 import {
-    follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsLoading, unFollow,
+    follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFollowing, toggleIsLoading, unFollow,
     UsersType,
 } from "../../redax/usersReducer";
 import React, {FC} from "react";
@@ -10,18 +10,21 @@ import Preloader from "../optional/Preloader";
 import {compose} from "redux";
 import {usersAPI} from "../../api/api";
 
+// Типи для класового компонента
 type UsersContainerPropsType = {
     users: UsersType[]
     pageSize: number
     totalUsersCount: number
     currentPage: number
     isLoading: boolean
+    followingIsProgress: Array<string>
     follow: (userID: string) => void
     unFollow: (userID: string) => void
     setUsers: (users: any) => void
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
     toggleIsLoading: (isLoading: boolean) => void
+    toggleIsFollowing: (userId: string, isLoading: boolean) => void
 }
 
 class UsersContainer extends React.Component<UsersContainerPropsType> {
@@ -65,10 +68,11 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
                        setUsers={this.props.setUsers}
                        pageSize={this.props.pageSize}
                        totalUsersCount={this.props.totalUsersCount}
+                       followingIsProgress={this.props.followingIsProgress}
                        currentPage={this.props.currentPage}
                        onPageChanged={this.onPageChanged}
+                       toggleIsFollowing={this.props.toggleIsFollowing}
                 />
-
             </>
         )
     }
@@ -80,6 +84,7 @@ type MapStatePropsType = {
     totalUsersCount: number
     currentPage: number
     isLoading: boolean
+    followingIsProgress: Array<string>
 }
 
 function mapStateToProps(state: AppStateType): MapStatePropsType {
@@ -88,7 +93,8 @@ function mapStateToProps(state: AppStateType): MapStatePropsType {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isLoading: state.usersPage.isLoading
+        isLoading: state.usersPage.isLoading,
+        followingIsProgress: state.usersPage.followingIsProgress
     }
 }
 
@@ -98,5 +104,6 @@ export default compose<FC>(connect(mapStateToProps, {
     setUsers,
     setCurrentPage,
     setTotalUsersCount,
-    toggleIsLoading
+    toggleIsLoading,
+    toggleIsFollowing
 }))(UsersContainer)

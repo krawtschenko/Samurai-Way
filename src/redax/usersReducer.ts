@@ -18,6 +18,7 @@ export type UsersPageType = {
     totalUsersCount: number
     currentPage: number
     isLoading: boolean
+    followingIsProgress: Array<string>
 }
 
 const usersPage: UsersPageType = {
@@ -25,7 +26,8 @@ const usersPage: UsersPageType = {
     pageSize: 10,
     totalUsersCount: 0,
     currentPage: 1,
-    isLoading: false
+    isLoading: false,
+    followingIsProgress: []
 }
 
 export const usersReducer = (state: UsersPageType = usersPage, action: ActionsType): UsersPageType => {
@@ -48,6 +50,13 @@ export const usersReducer = (state: UsersPageType = usersPage, action: ActionsTy
             return {...state, totalUsersCount: action.totalUsersCount}
         case "TOGGLE-IS-LOADING":
             return {...state, isLoading: action.isLoading}
+        case "TOGGLE-IS-FOLLOWING":
+            return {
+                ...state,
+                followingIsProgress: action.isLoading
+                    ? [...state.followingIsProgress, action.userId]
+                    : state.followingIsProgress.filter(id => id !== action.userId)
+            }
         default:
             return state
     }
@@ -60,6 +69,7 @@ type ActionsType =
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof toggleIsLoading>
+    | ReturnType<typeof toggleIsFollowing>
 
 export const follow = (userID: string) => {
     return {
@@ -98,5 +108,13 @@ export const toggleIsLoading = (isLoading: boolean) => {
     return {
         type: "TOGGLE-IS-LOADING",
         isLoading
+    } as const
+}
+
+export const toggleIsFollowing = (userId: string, isLoading: boolean) => {
+    return {
+        type: "TOGGLE-IS-FOLLOWING",
+        isLoading,
+        userId
     } as const
 }

@@ -14,6 +14,8 @@ type UsersPropsType = {
     totalUsersCount: number
     currentPage: number
     onPageChanged: (currentPage: number) => void
+    followingIsProgress: Array<string>
+    toggleIsFollowing: (userId: string, isLoading: boolean) => void
 }
 
 export const Users: React.FC<UsersPropsType> = (props) => {
@@ -48,7 +50,9 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                             <div>
                                 {user.followed
                                     ? <button className={style.users__btn_unfollow}
+                                              disabled={props.followingIsProgress.some(id => id === user.id)}
                                               onClick={() => {
+                                                  props.toggleIsFollowing(user.id, true)
                                                   axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
                                                       {
                                                           withCredentials: true,
@@ -59,10 +63,13 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                                                           if (response.data.resultCode === 0) {
                                                               props.unFollow(user.id)
                                                           }
+                                                          props.toggleIsFollowing(user.id, false)
                                                       })
                                               }}>Unfollow</button>
                                     : <button className={style.users__btn_follow}
+                                              disabled={props.followingIsProgress.some(id => id === user.id)}
                                               onClick={() => {
+                                                  props.toggleIsFollowing(user.id, true)
                                                   axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
                                                       {}, {
                                                           withCredentials: true,
@@ -73,6 +80,7 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                                                           if (response.data.resultCode === 0) {
                                                               props.follow(user.id)
                                                           }
+                                                          props.toggleIsFollowing(user.id, false)
                                                       })
                                               }}>Follow</button>}
                             </div>
