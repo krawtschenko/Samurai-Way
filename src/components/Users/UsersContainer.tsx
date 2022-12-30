@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../redax/reduxStore";
 import {
     follow,
-    getUsers,
+    getUsers, setCurrentPage,
     toggleIsLoading, unfollow,
     UsersType,
 } from "../../redax/usersReducer";
@@ -22,6 +22,7 @@ type UsersContainerPropsType = {
     getUsers: (currentPage: number, pageSize: number) => void
     follow: (userID: string) => void
     unfollow: (userID: string) => void
+    setCurrentPage: (currentPage: number) => void
 }
 
 class UsersContainer extends React.Component<UsersContainerPropsType> {
@@ -55,6 +56,7 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
         //         this.props.setUsers(data.items)
         //     })
         this.props.getUsers(currentPage, this.props.pageSize)
+        this.props.setCurrentPage(currentPage)
     }
 
     render() {
@@ -97,6 +99,7 @@ function mapStateToProps(state: AppStateType): MapStatePropsType {
 
 export default compose<FC>(connect(mapStateToProps, {
     toggleIsLoading,
+    setCurrentPage,
     // Діспатчимо санки
     getUsers,
     follow,
