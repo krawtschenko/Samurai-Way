@@ -122,6 +122,8 @@ export const toggleIsFollowing = (userId: string, isLoading: boolean) => {
 export const getUsers = (currentPage: number, pageSize: number) => {
     // Функція thunk
     return (dispatch: Dispatch) => {
+        // При клікі міняємо в Сторі нинішню сторінку
+        dispatch(setCurrentPage(currentPage))
         // Вмикаємо анімацію завантаження
         dispatch(toggleIsLoading(true))
         // Відправляємо запрос на сервер
