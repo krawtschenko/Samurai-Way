@@ -15,5 +15,11 @@ export const usersAPI = {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
             // Повертаємо не цілу відповідь, а тільки data. Це теж буде проміс
             .then(response => response.data)
+    },
+    unfollow(userId: string) {
+        return instance.delete(`follow/${userId}`)
+    },
+    follow(userId: string) {
+        return instance.post(`follow/${userId}`)
     }
 }

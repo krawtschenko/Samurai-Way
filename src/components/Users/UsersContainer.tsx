@@ -1,14 +1,15 @@
 import {connect} from "react-redux";
 import {AppStateType} from "../../redax/reduxStore";
 import {
-    follow, setCurrentPage, setTotalUsersCount, setUsers, toggleIsFollowing, toggleIsLoading, unFollow,
+    follow,
+    getUsers,
+    toggleIsLoading, unfollow,
     UsersType,
 } from "../../redax/usersReducer";
 import React, {FC} from "react";
 import {Users} from "./Users";
 import Preloader from "../optional/Preloader";
 import {compose} from "redux";
-import {usersAPI} from "../../api/api";
 
 // Типи для класового компонента
 type UsersContainerPropsType = {
@@ -18,44 +19,42 @@ type UsersContainerPropsType = {
     currentPage: number
     isLoading: boolean
     followingIsProgress: Array<string>
+    getUsers: (currentPage: number, pageSize: number) => void
     follow: (userID: string) => void
-    unFollow: (userID: string) => void
-    setUsers: (users: any) => void
-    setCurrentPage: (currentPage: number) => void
-    setTotalUsersCount: (totalUsersCount: number) => void
-    toggleIsLoading: (isLoading: boolean) => void
-    toggleIsFollowing: (userId: string, isLoading: boolean) => void
+    unfollow: (userID: string) => void
 }
 
 class UsersContainer extends React.Component<UsersContainerPropsType> {
     // componentDidMount() викликається відразу після монтування компонента
     componentDidMount() {
-        // Вмикаємо анімацію завантаження
-        this.props.toggleIsLoading(true)
-        // Відправляємо запрос на сервер
-        // І після того як на запрос прийде відповідь, проводимо операції з response
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-            // Вимикаємо анімацію завантаження
-            this.props.toggleIsLoading(false)
-            // Записуємо юзерів, які прийшли в респонді, в наш стейт
-            this.props.setUsers(data.items)
-            // Записуємо скільки всього юзерів
-            this.props.setTotalUsersCount(data.totalCount)
-        })
+        // // Вмикаємо анімацію завантаження
+        // this.props.toggleIsLoading(true)
+        // // Відправляємо запрос на сервер
+        // // І після того як на запрос прийде відповідь, проводимо операції з response
+        // usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
+        //     // Вимикаємо анімацію завантаження
+        //     this.props.toggleIsLoading(false)
+        //     // Записуємо юзерів, які прийшли в респонді, в наш стейт
+        //     this.props.setUsers(data.items)
+        //     // Записуємо скільки всього юзерів
+        //     this.props.setTotalUsersCount(data.totalCount)
+        // })
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     // onPageChanged - це метод в класі UsersContainer, який оновлює сторінку юзерів
     onPageChanged = (currentPage: number) => {
-        // При клікі міняємо в Сторі нинішню сторінку
-        this.props.setCurrentPage(currentPage)
-        // Вмикаємо анімацію завантаження
-        this.props.toggleIsLoading(true)
-        // І робимо новий запрос, щоб оновити дані
-        usersAPI.getUsers(currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.toggleIsLoading(false)
-                this.props.setUsers(data.items)
-            })
+        // // При клікі міняємо в Сторі нинішню сторінку
+        // this.props.setCurrentPage(currentPage)
+        // // Вмикаємо анімацію завантаження
+        // this.props.toggleIsLoading(true)
+        // // І робимо новий запрос, щоб оновити дані
+        // usersAPI.getUsers(currentPage, this.props.pageSize)
+        //     .then(data => {
+        //         this.props.toggleIsLoading(false)
+        //         this.props.setUsers(data.items)
+        //     })
+        this.props.getUsers(currentPage, this.props.pageSize)
     }
 
     render() {
@@ -64,14 +63,12 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
                 {this.props.isLoading ? <Preloader/> : null}
                 <Users users={this.props.users}
                        follow={this.props.follow}
-                       unFollow={this.props.unFollow}
-                       setUsers={this.props.setUsers}
+                       unFollow={this.props.unfollow}
                        pageSize={this.props.pageSize}
                        totalUsersCount={this.props.totalUsersCount}
                        followingIsProgress={this.props.followingIsProgress}
                        currentPage={this.props.currentPage}
                        onPageChanged={this.onPageChanged}
-                       toggleIsFollowing={this.props.toggleIsFollowing}
                 />
             </>
         )
@@ -99,11 +96,9 @@ function mapStateToProps(state: AppStateType): MapStatePropsType {
 }
 
 export default compose<FC>(connect(mapStateToProps, {
-    follow,
-    unFollow,
-    setUsers,
-    setCurrentPage,
-    setTotalUsersCount,
     toggleIsLoading,
-    toggleIsFollowing
+    // Діспатчимо санки
+    getUsers,
+    follow,
+    unfollow
 }))(UsersContainer)

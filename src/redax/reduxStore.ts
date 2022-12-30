@@ -1,8 +1,9 @@
-import {combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import profileReducer from "./profileReducer";
 import dialogsReducer from "./dialogsReducer";
 import {usersReducer} from "./usersReducer";
 import {authReducer} from "./authReducer";
+import thunkMiddleware from 'redux-thunk'
 
 // Типізація для Redux
 export type AppStateType = ReturnType<typeof reducers>
@@ -14,5 +15,6 @@ const reducers = combineReducers({
     auth: authReducer
 })
 
-export const store = createStore(reducers)
+// applyMiddleware - для того, щоб могли діспатчити санку
+export const store = createStore(reducers, applyMiddleware(thunkMiddleware))
 
