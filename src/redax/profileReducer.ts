@@ -1,4 +1,6 @@
 import {v1} from "uuid";
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
 
 export type PostsType = {
     id: string
@@ -77,12 +79,20 @@ export const addPostAC = () => {
         type: "ADD-POST"
     } as const
 }
-
-export const setUserProfile = (profile: ProfileType | null) => {
+const setUserProfile = (profile: ProfileType | null) => {
     return {
         type: "SET-USER-PROFILE",
         profile
     } as const
+}
+
+export const getUserProfile = (userId: string) => {
+    return (dispatch: Dispatch) => {
+        usersAPI.getProfile(userId)
+            .then(response => {
+                dispatch(setUserProfile(response.data))
+            })
+    }
 }
 
 export default profileReducer;

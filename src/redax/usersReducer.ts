@@ -74,43 +74,43 @@ type ActionsType =
     | ReturnType<typeof toggleIsLoading>
     | ReturnType<typeof toggleIsFollowing>
 
-export const followSuccess = (userID: string) => {
+const followSuccess = (userID: string) => {
     return {
         type: "FOLLOW",
         userID
     } as const
 }
-export const unfollowSuccess = (userID: string) => {
+const unfollowSuccess = (userID: string) => {
     return {
         type: "UNFOLLOW",
         userID
     } as const
 }
-export const setUsers = (users: UsersType[]) => {
+const setUsers = (users: UsersType[]) => {
     return {
         type: "SET-USERS",
         users
     } as const
 }
-export const setCurrentPage = (currentPage: number) => {
+const setCurrentPage = (currentPage: number) => {
     return {
         type: "SET-CURRENT-PAGE",
         currentPage
     } as const
 }
-export const setTotalUsersCount = (totalUsersCount: number) => {
+const setTotalUsersCount = (totalUsersCount: number) => {
     return {
         type: "SET-TOTAL-USERS-COUNT",
         totalUsersCount
     } as const
 }
-export const toggleIsLoading = (isLoading: boolean) => {
+const toggleIsLoading = (isLoading: boolean) => {
     return {
         type: "TOGGLE-IS-LOADING",
         isLoading
     } as const
 }
-export const toggleIsFollowing = (userId: string, isLoading: boolean) => {
+const toggleIsFollowing = (userId: string, isLoading: boolean) => {
     return {
         type: "TOGGLE-IS-FOLLOWING",
         isLoading,
@@ -138,7 +138,6 @@ export const getUsers = (currentPage: number, pageSize: number) => {
         })
     }
 }
-
 export const follow = (userID: string) => {
     return (dispatch: Dispatch) => {
         dispatch(toggleIsFollowing(userID, true))
@@ -152,7 +151,6 @@ export const follow = (userID: string) => {
             })
     }
 }
-
 export const unfollow = (userID: string) => {
     return (dispatch: Dispatch) => {
         dispatch(toggleIsFollowing(userID, true))

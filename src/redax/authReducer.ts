@@ -1,3 +1,6 @@
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
+
 export type AuthType = {
     userId: number | null
     email: string | null
@@ -23,9 +26,22 @@ export const authReducer = (state: AuthType = initialState, action: ActionType):
 
 type ActionType = ReturnType<typeof setAuthUserDataAC>
 
-export const setAuthUserDataAC = (data: AuthType) => {
+const setAuthUserDataAC = (data: AuthType) => {
     return {
         type: 'SET-USER-DATA',
         data
     } as const
+}
+
+export const getAuthUserData = () => {
+    return (dispatch: Dispatch) => {
+        // Відправляємо запрос на сервер
+        usersAPI.me()
+            // Після того як на запрос прийшла відповідь response, міняємо деякі дані
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(setAuthUserDataAC(response.data.data))
+                }
+            })
+    }
 }
