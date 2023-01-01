@@ -10,6 +10,7 @@ type MapStatePropsType = {
     dialogs: DialogsType[]
     messages: MessagesType[]
     newMessageText: string
+    isAuth: boolean
 }
 type MapDispatchPropsType = {
     onMessageChange: (text: string) => void
@@ -21,11 +22,12 @@ function mapStateToProps(state: AppStateType): MapStatePropsType {
     return {
         dialogs: state.dialogsPage.dialogs,
         messages: state.dialogsPage.messages,
-        newMessageText: state.dialogsPage.newMessageText
+        newMessageText: state.dialogsPage.newMessageText,
+        isAuth: state.auth.isAuth
     }
 }
 
-// Повертає функції які викликають dispatch і далі передаємо і Dialogs
+// Повертає функції які викликають dispatch і далі передаємо в Dialogs
 function mapDispatchToProps(dispatch: Dispatch): MapDispatchPropsType {
     return {
         onMessageChange: (text: string) => {

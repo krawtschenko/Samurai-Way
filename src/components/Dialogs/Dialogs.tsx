@@ -3,11 +3,13 @@ import React, {ChangeEvent} from "react";
 import {DialogsItem} from "./DialogsItem/DialogsItem";
 import {MessagesItem} from "./MessagesItem/MessagesItem";
 import {DialogsType, MessagesType} from "../../redax/dialogsReducer";
+import {Redirect} from "react-router-dom";
 
 type DialogsPropsType = {
     dialogs: DialogsType[]
     messages: MessagesType[]
     newMessageText: string
+    isAuth: boolean
     onMessageChange: (text: string) => void
     sendMessage: () => void
 }
@@ -17,6 +19,7 @@ export const Dialogs: React.FC<DialogsPropsType> = (
         dialogs,
         messages,
         newMessageText,
+        isAuth,
         onMessageChange,
         sendMessage
     }) => {
@@ -40,6 +43,11 @@ export const Dialogs: React.FC<DialogsPropsType> = (
 
     const onClickButtonHandler = () => {
         sendMessage()
+    }
+
+    // Якшо ми не залоговані, то за допомогою Redirect перенаправляє нас на вказану адресу
+    if (!isAuth) {
+        return <Redirect to={"/login"}/>
     }
 
     return (
