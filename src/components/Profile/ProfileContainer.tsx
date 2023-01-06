@@ -42,5 +42,8 @@ function mapStateToProps(state: AppStateType): MapStatePropsType {
     }
 }
 
-export default compose<FC>(WithAuthRedirect,
-    connect(mapStateToProps, {getUserProfile}), withRouter)(ProfileContainer)
+export default compose<FC>(
+    connect(mapStateToProps, {getUserProfile}),
+    withRouter,
+    WithAuthRedirect,
+)(ProfileContainer)

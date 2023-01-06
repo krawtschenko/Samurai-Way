@@ -10,6 +10,7 @@ import React, {FC} from "react";
 import {Users} from "./Users";
 import Preloader from "../optional/Preloader";
 import {compose} from "redux";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 
 // Типи для класового компонента
 type UsersContainerPropsType = {
@@ -73,9 +74,12 @@ function mapStateToProps(state: AppStateType): MapStatePropsType {
     }
 }
 
-export default compose<FC>(connect(mapStateToProps, {
-    // Діспатчимо санки
-    getUsers,
-    follow,
-    unfollow
-}))(UsersContainer)
+export default compose<FC>(
+    connect(mapStateToProps, {
+        // Діспатчимо санки
+        getUsers,
+        follow,
+        unfollow
+    }),
+    WithAuthRedirect
+)(UsersContainer)

@@ -41,5 +41,7 @@ function mapDispatchToProps(dispatch: Dispatch): MapDispatchPropsType {
 
 // Викликаємо фунцкію connect і потім викликаємо функцію яку визвала connect
 // В параметри передаємо те, шо повинно прийти в пропси Dialogs
-export default compose<FC>(WithAuthRedirect,
-    connect(mapStateToProps, mapDispatchToProps))(Dialogs)
+export default compose<FC>(
+    connect(mapStateToProps, mapDispatchToProps),
+    WithAuthRedirect
+)(Dialogs)

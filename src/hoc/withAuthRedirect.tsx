@@ -15,7 +15,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 export const WithAuthRedirect = (Component: any) => {
     const RedirectComponent = (props: MapStateToPropsType) => {
-        let {isAuth, ...restProps} = props
+        const {isAuth, ...restProps} = props
 
         // Якшо ми не залоговані, то за допомогою Redirect перенаправляє нас на вказану адресу
         if (!isAuth) {
