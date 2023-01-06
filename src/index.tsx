@@ -7,7 +7,7 @@ import React from "react";
 import {Provider} from "react-redux";
 
 ReactDOM.render(
-    // За допомогою BrowserRouter ми можемо міняти маршутізацію (ссилки)
+    // За допомогою BrowserRouter ми можемо міняти маршутізацію (посилання)
     <BrowserRouter>
         {/*За допомогою Provider, всі дочирні елементи App можуть брати store без пропсів*/}
         <Provider store={store}>
