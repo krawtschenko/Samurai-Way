@@ -4,7 +4,7 @@ import './App.css';
 import {Navbar} from "./components/Navbar/Navbar";
 import {News} from "./components/News/News";
 import {Settings} from "./components/Settings/Settings";
-import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import Dialogs from "./components/Dialogs/DialogsContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import UsersContainer from "./components/Users/UsersContainer";
@@ -20,7 +20,7 @@ function App() {
                 <div className={"app__wrapper-content"}>
                     <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
                     <Route path="/dialogs"
-                           render={() => <DialogsContainer/>}/>
+                           render={() => <Dialogs/>}/>
                     <Route path="/users" render={() => <UsersContainer/>}/>
                     <Route path="/news" render={() => <News/>}/>
                     <Route path="/settings" render={() => <Settings/>}/>

@@ -2,7 +2,9 @@ import {Dialogs} from "./Dialogs";
 import {DialogsType, MessagesType, sendMessageAC, updateNewMessageTextAC} from "../../redax/dialogsReducer";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redax/reduxStore";
-import {Dispatch} from "redux";
+import {compose, Dispatch} from "redux";
+import {FC} from "react";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 
 // Презентаційний компонент (для того, щоб в компонент Dialog не передавати всі дані
 
@@ -10,7 +12,6 @@ type MapStatePropsType = {
     dialogs: DialogsType[]
     messages: MessagesType[]
     newMessageText: string
-    isAuth: boolean
 }
 type MapDispatchPropsType = {
     onMessageChange: (text: string) => void
@@ -22,8 +23,7 @@ function mapStateToProps(state: AppStateType): MapStatePropsType {
     return {
         dialogs: state.dialogsPage.dialogs,
         messages: state.dialogsPage.messages,
-        newMessageText: state.dialogsPage.newMessageText,
-        isAuth: state.auth.isAuth
+        newMessageText: state.dialogsPage.newMessageText
     }
 }
 
@@ -40,5 +40,6 @@ function mapDispatchToProps(dispatch: Dispatch): MapDispatchPropsType {
 }
 
 // Викликаємо фунцкію connect і потім викликаємо функцію яку визвала connect
-// В параметри передаємо те, шо повинно прийти в Dialogs в пропси
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+// В параметри передаємо те, шо повинно прийти в пропси Dialogs
+export default compose<FC>(WithAuthRedirect,
+    connect(mapStateToProps, mapDispatchToProps))(Dialogs)
