@@ -2,16 +2,34 @@ import React from 'react';
 
 type ProfileStatusType = {
     status: string
+    updateUserStatus: (status: string) => void
 }
 
 export class ProfileStatus extends React.Component<ProfileStatusType> {
     state = {
-        editMode: false
+        editMode: false,
+        status: this.props.status
     }
 
-    toggleEditMode() {
+    activateEditMode = () => {
+        // Щоб була перерисовка this.setState
         this.setState({
-            editMode: !this.state.editMode
+            editMode: true
+        })
+    }
+
+    deactivateEditMode = () => {
+        // Щоб була перерисовка this.setState
+        this.setState({
+            editMode: false
+        })
+        // Відправляємо на сервер і оновлюємо статус
+        this.props.updateUserStatus(this.state.status)
+    }
+
+    onStatusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({
+            status: event.currentTarget.value
         })
     }
 
@@ -19,8 +37,9 @@ export class ProfileStatus extends React.Component<ProfileStatusType> {
         return (
             <div>
                 {this.state.editMode
-                    ? <input onBlur={this.toggleEditMode.bind(this)} autoFocus value={this.props.status}/>
-                    : <span onDoubleClick={this.toggleEditMode.bind(this)}><b>{this.props.status}</b></span>}
+                    ? <input onChange={this.onStatusChange} onBlur={this.deactivateEditMode.bind(this)} autoFocus
+                             value={this.state.status}/>
+                    : <span onDoubleClick={this.activateEditMode}><b>{this.props.status || 'No status'}</b></span>}
             </div>
         );
     }

@@ -1,11 +1,17 @@
 import style from './ProfileInfo.module.sass'
-import React from "react";
+import React, {FC} from "react";
 import {ProfileType} from "../../../redax/profileReducer";
 import Preloader from "../../optional/Preloader";
 import userIcon from '../../../Images/userIcon.png'
 import {ProfileStatus} from "./ProfileStatus";
 
-export const ProfileInfo = (props: { profile: ProfileType | null }) => {
+type ProfileInfoType = {
+    profile: ProfileType | null
+    status: string
+    updateUserStatus: (status: string) => void
+}
+
+export const ProfileInfo: FC<ProfileInfoType> = (props) => {
     if (!props.profile) {
         return <Preloader/>
     }
@@ -15,7 +21,7 @@ export const ProfileInfo = (props: { profile: ProfileType | null }) => {
             <div>
                 <img src={props.profile.photos.large !== null ? props.profile.photos.large : userIcon} alt="large"/>
             </div>
-            <ProfileStatus status={'Hello'}/>
+            <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
             <div>
                 <div>{props.profile.contacts.facebook}</div>
                 <div>{props.profile.contacts.github}</div>
